@@ -25,7 +25,7 @@ class _RootScreenState extends State<RootScreen> {
   }
 
   @override
-  void dispose() {
+  void dispose(){
     _scrollController.dispose();
     super.dispose();
   }
@@ -36,15 +36,12 @@ class _RootScreenState extends State<RootScreen> {
     setState(() {
       if (offset < 0) {
         // 1. Handle Height Expansion
-        _headerHeight = (_collapsedHeight - offset).clamp(
-          _collapsedHeight,
-          _expandedHeight,
-        );
+        _headerHeight = (_collapsedHeight - offset).clamp(_collapsedHeight, _expandedHeight);
 
         // 2. Handle Zoom Out Logic
         // We calculate how far we are into the overscroll (0.0 to 1.0)
         double progress = (-offset / _maxOverscroll).clamp(0.0, 1.0);
-
+        
         // Scale moves from 1.3 down to 1.0 based on progress
         _scale = 1.3 - (0.3 * progress);
       } else {
@@ -58,8 +55,8 @@ class _RootScreenState extends State<RootScreen> {
   Widget build(BuildContext context) {
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
     final String logoPath = isDark
-        ? 'assets/images/hlwe_logo_dark.png'
-        : 'assets/images/hlwe_logo.png';
+        ? 'assets/images/medcare_banner.png'
+        : 'assets/images/medcare_banner.png';
 
     return Scaffold(
       body: Stack(
@@ -68,10 +65,13 @@ class _RootScreenState extends State<RootScreen> {
           SizedBox(
             height: _headerHeight,
             width: double.infinity,
-            child: ClipRect(
+            child: ClipRect( 
               child: Transform.scale(
                 scale: _scale,
-                child: Image.asset('assets/images/HLWE.jpg', fit: BoxFit.cover),
+                child: Image.asset(
+                  'assets/images/medcare_building.png',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -87,15 +87,13 @@ class _RootScreenState extends State<RootScreen> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(30),
-                    ),
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withAlpha(20),
                         blurRadius: 10,
                         offset: const Offset(0, -5),
-                      ),
+                      )
                     ],
                   ),
                   padding: const EdgeInsets.all(30),
@@ -104,7 +102,7 @@ class _RootScreenState extends State<RootScreen> {
                       Center(
                         child: Image.asset(
                           logoPath,
-                          height: 70,
+                          height: 60,
                           fit: BoxFit.contain,
                         ),
                       ),

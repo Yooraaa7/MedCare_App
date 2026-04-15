@@ -54,9 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         AutoScrollBanner(
                           bannerImages: [
-                            'assets/images/placeholder.png',
-                            'assets/images/placeholder.png',
-                            'assets/images/placeholder.png',
+                            'assets/images/banner_1.png',
+                            'assets/images/banner_2.png',
+                            'assets/images/banner_3.png',
                           ],
                           colorFilters: [
                             ColorFilter.mode(
@@ -64,8 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               BlendMode.darken,
                             ),
                             ColorFilter.mode(
-                              Colors.white.withAlpha(100),
-                              BlendMode.lighten,
+                              Colors.black.withAlpha(40),
+                              BlendMode.darken,
+                            ),
+                            ColorFilter.mode(
+                              Colors.black.withAlpha(40),
+                              BlendMode.darken,
                             ),
                           ],
                         ),

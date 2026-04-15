@@ -16,7 +16,7 @@ class HomeHeader extends StatelessWidget {
         children: [
           // Background image
           Positioned.fill(
-            child: Image.asset('assets/images/HLWE_2.jpg', fit: BoxFit.cover),
+            child: Image.asset('assets/images/medcare_building.png', fit: BoxFit.cover),
           ),
 
           // Search bar

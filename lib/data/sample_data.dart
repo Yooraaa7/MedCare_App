@@ -25,10 +25,10 @@ class SampleData {
   static User sampleUser = User(
     password: '123456',
     mrNo: '00123456',
-    icNo: '060424-00-0000',
-    name: 'Alice',
+    icNo: '061031-00-0000',
+    name: 'Felix',
     phone: '0123456789',
-    email: 'alice@gmail.com',
+    email: 'felix@gmail.com',
     isForeign: false,
     totalPayable:
         DataService.getAppointmentsByStatus(AppointmentStatus.completed)

@@ -14,8 +14,8 @@ class PaymentSummaryScreen extends StatelessWidget {
     final double totalPayable = SampleData.sampleUser.totalPayable;
 
     final String logoPath = isDark
-        ? 'assets/images/hlwe_logo_dark.png'
-        : 'assets/images/hlwe_logo.png';
+        ? 'assets/images/medcare_banner.png'
+        : 'assets/images/medcare_banner.png';
 
     final Color payButtonColor = isDark
         ? AppColors.green.withAlpha(180)
