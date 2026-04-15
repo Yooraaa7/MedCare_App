@@ -1,0 +1,90 @@
+[
+    {
+      "name": "Cardiology",
+      "intro": "Cardiology is a branch of medicine dealing with disorders of the heart as well as parts of the circulatory system.  Heart disease is the commonest cause of death in Malaysia today. ",
+      "imagePath": "cardiology.png",
+      "sections": [
+        {
+          "title": "Common Symptons",
+          "content": "* Chest pain\n* Shortness of breath\n* Swelling of ankles or legs\n* Blackout"
+        },
+        {
+          "title": "Common Diseases",
+          "content": "* Hypertension\n* High blood pressure",
+          "isBulleted": true
+        },
+        {
+          "title": "Common Treatments",
+          "content": "Heart conditions can be treated with medication, surgery, or minimally invasive procedures.",
+          "isBulleted": false
+        }
+      ]
+    },
+    {
+      "name": "Ear, Nose, & Throat",
+      "intro": "Ear, Nose, and Throat (ENT) diagnoses and treats conditions affecting the ears, nose, throat, and related areas of the head and neck.",
+      "imagePath": "ear-nose-throat.png",
+      "sections": []
+    },
+    {
+      "id": "general-surgery",
+      "name": "General Surgery",
+      "intro": "General surgery focused on non-surgical treatment of conditions involving the abdomen, digestive tract, liver, soft tissues, and endocrine system.",
+      "imagePath": "general-surgery.png",
+      "sections": []
+    },
+    {
+      "name": "Internal Medicine",
+      "intro": "A physician (internal medicine specialist) treats non-surgical medical conditions by diagnosing illnesses, performing examinations holistically, and advising treatment using medication and counselling.",
+      "imagePath": "internal-medicine.png",
+      "sections": []
+    },
+    {
+      "name": "Obstetrics & Gynaecology",
+      "intro": "Obstetricians and Gynaecologists are doctors who specialise in women’s reproductive health. Obstetrics focuses on pregnancy and childbirth, while gynaecology treats conditions affecting the female reproductive organs.",
+      "imagePath": "obstetrics.png",
+      "sections": []
+    },
+    {
+      "name": "Ophthalmology",
+      "intro": "Ophthalmology focuses on eye health and vision care. In addition to general eye care, the centre also offers subspecialist services such as cataract treatment and low vision aids.",
+      "imagePath": "ophthalmology.png",
+      "sections": []
+    },
+    {
+      "name": "Orthopaedic",
+      "intro": "Orthopaedics focuses on conditions affecting the bones, joints, muscles, and ligaments.",
+      "imagePath": "orthopaedic.png",
+      "sections": []
+    },
+    {
+      "name": "Paediatric",
+      "intro": "Paediatrics manage the health of the children, including physical, behaviour, and mental health issue.",
+      "imagePath": "paediatric.png",
+      "sections": []
+    },
+    {
+      "name": "Psychiatry",
+      "intro": "Psychiatry focuses on mental health and emotional well-being. Psychiatrists diagnose and treat mental health conditions using therapy, medication, and ongoing support.",
+      "imagePath": "psychiatry.png",
+      "sections": []
+    },
+    {
+      "name": "Dentistry",
+      "intro": "Dentistry focused on the teeth, gums, and mouth. Key areas include preventive care, restorative work and specialized fields like oral surgery.",
+      "imagePath": "dentistry.png",
+      "sections": []
+    },
+    {
+      "name": "Nephrology",
+      "intro": "Nephrology focused on the care and treatment of kidney diseases. It is a specialty of internal medicine which involves kidney function, autoimmune disease, electrolytes imbalance and renal replacement therapy. ",
+      "imagePath": "nephrology.png",
+      "sections": []
+    },
+    {
+      "name": "Geriatric Medicine",
+      "intro": "Geriatric medicine is a branch of medicine concerned with the health and illness in elderly, which includes prevention of disease and disability in older people.  ",
+      "imagePath": "geriatric.png",
+      "sections": []
+    }
+  ]

@@ -1,0 +1,64 @@
+name: medcare_app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  file_picker: ^10.3.10
+  flutter:
+    sdk: flutter
+  flutter_launcher_icons: ^0.14.4
+  flutter_local_notifications: ^20.0.0
+  flutter_markdown_plus: ^1.0.7
+  flutter_secure_storage: ^10.0.0
+  go_router: ^17.0.1
+  google_fonts: ^8.0.2
+  intl: ^0.20.2
+  pdfrx: ^2.2.24
+  qr_flutter: ^4.1.0
+  slide_to_act: ^2.0.2
+  smooth_page_indicator: ^2.0.1
+  timezone: ^0.10.1
+  url_launcher: ^6.3.2
+  uuid: ^4.5.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/images/banners/
+    - assets/images/cards/
+    - assets/images/insurance/
+    - assets/images/doctors/
+    - assets/images/specialties/
+    - assets/images/notices/
+    - assets/images/packages/
+    - assets/images/payment/
+    - assets/images/workflows/
+    - assets/terms/faq.json
+    - assets/terms/terms_of_use.json
+    - assets/terms/HLWE_Personal_Data_Protection_Notice.pdf
+    - assets/sample/invoice.pdf
+    - assets/data/specialties.json
+    - assets/data/doctors.json
+
+  fonts:
+  - family: Poppins
+    fonts:
+      - asset: assets/fonts/Poppins-Regular.ttf
+      - asset: assets/fonts/Poppins-Italic.ttf
+        style: italic
+      - asset: assets/fonts/Poppins-Medium.ttf
+        weight: 500
+      - asset: assets/fonts/Poppins-SemiBold.ttf
+        weight: 600
+      - asset: assets/fonts/Poppins-Bold.ttf
+        weight: 700

@@ -1,0 +1,445 @@
+{
+    "doctors": [
+      {
+        "imagePath": "dr_tan_hau_tong9.jpg",
+        "nameEng": "Dr. Tan Hau Tong",
+        "nameChinese": "陈孝栋医生",
+        "specialty": "Cardiology",
+        "title": "Consultant Cardiologist",
+        "qualification": "MD(Taiwan)",
+        "location": "Clinic 117, 1st Floor",
+        "contact": "+6012-3456789",
+        "languages": ["English", "Mandarin", "Malay"],
+        "holidayClosures": ["Public Holidays"],
+        "isBookable": true,
+        "isPrimary": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Mondays - Fridays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:00 AM", "close": "01:00 PM" },
+              { "open": "02:00 PM", "close": "05:00 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Sunday",
+            "isClosed": true,
+            "shifts": []
+          }
+        ]
+      },
+      {
+        "imagePath": "dr_saravanan_krishinan9.jpg",
+        "nameEng": "Dr. Saravanan Krishinan",
+        "nameChinese": "薩拉瓦南医生",
+        "specialty": "Cardiology",
+        "title": "Consultant Cardiologist",
+        "qualification": "MBBS (MAHE), M Med (UK M'sia)",
+        "location": "Clinic 116, 1st Floor",
+        "contact": "+6046528847",
+        "languages": ["English", "Malay"],
+        "holidayClosures": [],
+        "isBookable": false,
+        "weeklySchedule": []
+      },
+      {
+        "imagePath": "dr_amardeep_singh.jpg",
+        "nameEng": "Dr. Amardeep Singh",
+        "nameChinese": "阿玛堤医生",
+        "specialty": "Cardiology",
+        "title": "Consultant Cardiologist",
+        "qualification": "MBBS (Mal), MRCP (Ire), Dip Vocational Graduate In Electrophysiology",
+        "location": "Clinic 118, 1st Floor",
+        "contact": "+6046528847",
+        "languages": ["English", "Tamil", "Malay"],
+        "holidayClosures": ["Public Holidays"],
+        "isBookable": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Mondays - Fridays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:30 AM", "close": "12:30 PM" },
+              { "open": "02:00 PM", "close": "04:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Sunday",
+            "isClosed": true,
+            "shifts": []
+          }
+        ]
+      },
+      {
+        "imagePath": "dr_lim_chin_yu_stanley_n.jpg",
+        "nameEng": "Dr. Lim Chin Yu, Stanley",
+        "nameChinese": "林震耀医生",
+        "specialty": "Cardiology",
+        "title": "Consultant Cardiologist",
+        "qualification": "MBBS (Monash), MRCP (Ire)",
+        "location": "Clinic 126, 1st Floor",
+        "contact": "+6046528849",
+        "languages": ["English", "Mandarin", "Malay", "Cantonese", "Hokkien"],
+        "holidayClosures": ["Public Holidays"],
+        "isBookable": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Mondays - Fridays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "10:00 AM", "close": "01:00 PM" },
+              { "open": "02:00 PM", "close": "04:00 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Saturdays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:00 AM", "close": "01:00 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Sunday",
+            "isClosed": true,
+            "shifts": []
+          }
+        ]
+      },
+      {
+        "imagePath": "dr_mohamad_nazrulhisham_mad_naser9.jpg",
+        "nameEng": "Dr. Mohamad Nazrulhisham Mad Naser",
+        "nameChinese": "莫哈末纳茹西俕医生",
+        "specialty": "Cardiology",
+        "title": "Consultant Cardiologist",
+        "qualification": "MBBS, MintMed (UM), FSCMR (US), Fellowship in Cardiac Imaging (S'pore)",
+        "location": "Clinic 119, 1st Floor",
+        "contact": "+6046528807",
+        "languages": ["English", "Malay"],
+        "holidayClosures": ["Public Holidays"],
+        "isBookable": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Mondays - Thursdays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "10:00 AM", "close": "12:30 PM" },
+              { "open": "02:00 PM", "close": "04:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Fridays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:00 AM", "close": "10:00 AM" },
+              { "open": "03:00 PM", "close": "04:00 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Saturdays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "10:00 AM", "close": "12:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Sunday",
+            "isClosed": true,
+            "shifts": []
+          }
+        ]
+      },
+      {
+        "imagePath": "dr_koay_koon_wee.jpg",
+        "nameEng": "Dr. Koay Koon Wee",
+        "nameChinese": "郭军纬医生",
+        "specialty": "Cardiology",
+        "title": "Consultant Cardiologist",
+        "qualification": "MD (UKM), MRCP (UK)",
+        "location": "Clinic 118, 1st Floor",
+        "contact": "+6046528853",
+        "languages": ["English", "Malay", "Mandarin", "Hokkien", "Cantonese"],
+        "holidayClosures": [],
+        "isBookable": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "1st and 3rd Wednesday of the month",
+            "isClosed": false
+          }
+        ]
+      },
+      {
+        "imagePath": "dr_ng_hee_hua9.jpg",
+        "nameEng": "Dr. Ng Hee Hua",
+        "nameChinese": "黄熙华医生",
+        "specialty": "Ear, Nose, & Throat",
+        "title": "Consultant Ear, Nose & Throat Surgeon",
+        "qualification": "MBBS (Mangalore), FRCS (Ire), FRCS (Edin), MS ENT - Head & Neck Surg (UK M'sia)",
+        "location": "Clinic 115, 1st Floor",
+        "contact": "+6046528839",
+        "languages": ["English", "Malay", "Mandarin", "Hokkien", "Cantonese"],
+        "holidayClosures": ["Public Holidays"],
+        "isBookable": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Mondays, Wednesdays - Fridays",
+            "isClosed": false,
+            "shifts": [
+                {"open":"10:00 AM", "close":"12:30 PM"},
+                {"open":"02:30 PM", "close":"04:30 PM"}
+            ]
+          },
+          {
+            "dayOfWeek": "Saturdays",
+            "isClosed": false,
+            "shifts": [
+                {"open":"10:00 AM", "close":"12:30 PM"}
+            ]
+          },
+          {
+            "dayOfWeek": "Sundays",
+            "isClosed": true
+          }
+        ]
+      },
+      {
+        "imagePath": "dr_gopalan_nair9.jpg",
+        "nameEng": "Dr. Gopalan Nair",
+        "nameChinese": "谷巴篮医生",
+        "specialty": "Ear, Nose, & Throat",
+        "title": "Consultant Ear, Nose & Throat Surgeon",
+        "qualification": "MD (UK M'sia), MS ORL-HNS (UK M'sia)",
+        "location": "Clinic 112, 1st Floor",
+        "contact": "+6046528852",
+        "languages": [
+          "English",
+          "Bahasa Malaysia",
+          "Tamil",
+          "Malayalam",
+          "Basic Hokkien"
+        ],
+        "holidayClosures": ["Public Holidays"],
+        "isBookable": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Mondays, Tuesdays, Thursdays & Fridays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "10:00 AM", "close": "12:30 PM" },
+              { "open": "02:00 PM", "close": "04:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Wednesdays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "02:00 PM", "close": "04:00 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Saturdays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "10:00 AM", "close": "12:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Sundays",
+            "isClosed": true
+          }
+        ]
+      },
+      {
+        "imagePath": "dr_ruth_ng.jpg",
+        "nameEng": "Dr. Ruth Ng",
+        "nameChinese": "吴如德医生",
+        "specialty": "Ear, Nose, & Throat",
+        "title": "Consultant Ear, Nose & Throat Surgeon",
+        "qualification": "MD (UK M’sia), Dr. ORL-HNS (UK M’sia)",
+        "location": "Clinic 113, 1st Floor",
+        "contact": "+6046528668",
+        "languages": [
+          "English",
+          "Bahasa Malaysia",
+          "Mandarin",
+          "Hokkien",
+          "Cantonese"
+        ],
+        "holidayClosures": ["Public Holidays"],
+        "isBookable": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Mondays - Fridays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:30 AM", "close": "12:30 PM" },
+              { "open": "02:00 PM", "close": "04:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Saturdays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:30 AM", "close": "12:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Sundays",
+            "isClosed": true
+          }
+        ]
+      },
+      {
+        "imagePath": "dr_te_boon_chin.jpg",
+        "nameEng": "Dr. Te Boon Chin",
+        "nameChinese": "戴文俊医生",
+        "specialty": "Ear, Nose, & Throat",
+        "title": "Consultant Ear, Nose & Throat Surgeon",
+        "qualification": "MD (UK M’sia), Dr. ORL-HNS (UK M’sia), MRCS (Edin)",
+        "location": "Clinic D2, Ground Floor",
+        "contact": "+6046528669",
+        "languages": [
+          "English",
+          "Bahasa Malaysia",
+          "Mandarin",
+          "Hokkien"
+        ],
+        "holidayClosures": ["Sundays", "Public Holidays"],
+        "isBookable": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Mondays - Fridays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:30 AM", "close": "12:30 PM" },
+              { "open": "02:00 PM", "close": "04:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Saturdays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:30 AM", "close": "12:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Sundays",
+            "isClosed": true
+          }
+        ]
+      },
+      {
+        "imagePath": "dato_dr_tan_chee_khuan9.jpg",
+        "nameEng": "Dato' Dr. Tan Chee Khuan",
+        "nameChinese": "拿督陈志宽医生",
+        "specialty": "Psychiatry",
+        "title": "Consultant Psychiatrist",
+        "qualification": "FAMM, MBBS (Mal), MPM (Mal), FRANZCP (Aust)",
+        "location": "Clinic 35, Ground Floor",
+        "contact": "+6046528888 ext 1067",
+        "languages": [
+          "English",
+          "Bahasa Malaysia",
+          "Mandarin",
+          "Hokkien"
+        ],
+        "holidayClosures": ["Public Holidays"],
+        "isBookable": false,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Mondays - Fridays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:00 AM", "close": "01:00 PM" },
+              { "open": "02:00 PM", "close": "03:00 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Saturdays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:00 AM", "close": "12:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Sundays",
+            "isClosed": true
+          }
+        ],
+        "remarks": "Dato' Dr Tan Chee Khuan will only accept patients aged 16 years old and above for consultation. For new cases, please contact our clinic reception at extension 1067 to schedule your appointment for us to serve you better."
+      },
+      {
+        "imagePath": "dr_koh_chin_hong.jpg",
+        "nameEng": "Dr. Koh Chin Hong",
+        "nameChinese": "许振丰医生",
+        "specialty": "Psychiatry",
+        "title": "Consultant Psychiatrist",
+        "qualification": "MBBS (Mal), M Med (Psy) (US M'sia)",
+        "location": "Clinic 34, Ground Floor",
+        "contact": "+6046528888 ext 2067",
+        "languages": [
+          "English",
+          "Bahasa Malaysia",
+          "Mandarin",
+          "Hokkien",
+          "Cantonese",
+          "Teochew"
+        ],
+        "holidayClosures": ["Public Holidays"],
+        "isBookable": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Mondays - Fridays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:00 AM", "close": "01:00 PM" },
+              { "open": "02:00 PM", "close": "03:00 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Saturdays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "09:00 AM", "close": "12:30 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Sundays",
+            "isClosed": true
+          }
+        ],
+        "remarks": "Dr. Koh Chin Hong attends to patients aged 14 years and above. For new cases or to confirm appointment slot availability, kindly contact our clinic reception at extension 2067 to make the necessary arrangements. This allows us to serve you better."
+      },
+      {
+        "imagePath": "dr_thinesh_rajasingam.jpg",
+        "nameEng": "Dr. Thinesh Rajasingam",
+        "nameChinese": "帝涅士医生",
+        "specialty": "Psychiatry",
+        "title": "Consultant Psychiatrist",
+        "qualification": "MBBS (Adelaide), FRANZCP (Aust)",
+        "location": "Clinic 33, Ground Floor",
+        "contact": "+6046528740",
+        "languages": [
+          "English",
+          "Bahasa Malaysia"
+        ],
+        "holidayClosures": ["Public Holidays"],
+        "isBookable": true,
+        "weeklySchedule": [
+          {
+            "dayOfWeek": "Thursdays",
+            "isClosed": false,
+            "shifts": [
+              { "open": "08:30 AM", "close": "01:00 PM" }
+            ]
+          },
+          {
+            "dayOfWeek": "Mondays - Wednesdays, Fridays - Sundays",
+            "isClosed": true
+          }
+        ]
+      }   
+    ]
+  }
+
+ 

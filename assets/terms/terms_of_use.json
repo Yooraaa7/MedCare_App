@@ -1,0 +1,52 @@
+[
+  {
+    "number": 1,
+    "text": "Online appointment must be made at least one (1) working days prior to the actual appointment date and subject to availability of the Consultant(s)."
+  },
+  {
+    "number": 2,
+    "text": "Online appointment is only intended for non-emergency cases only. Patients who need urgent consultation should seek consultation at accident & emergency department as soon as possible."
+  },
+  {
+    "number": 3,
+    "text": "Online appointment can be made to consult more than one (1) Consultant on the same day but not at the same time and is subject to the availability of the Consultant(s)."
+  },
+  {
+    "text": "Kindly note that reservation made via online does not constitute to a confirmed appointment."
+  },
+  {
+    "number": 4,
+    "text": "Online appointment will only be confirmed via a confirmation email, phone call, SMS, or WhatsApp message from Hospital Lam Wah Ee (HLWE)."
+  },
+  {
+    "number": 5,
+    "text": "Once the online appointment is confirmed, a reminder SMS/Whatsapp will be sent to your registered number two (2) days prior to the said appointment."
+  },
+  {
+    "number": 6,
+    "text": "Rescheduling and/or cancellation of appointment can be made via phone call to HLWE or online appointment website."
+  },
+  {
+    "number": 7,
+    "text": "HLWE reserves the rights to cancel or reschedule your appointment in the event of unforeseen circumstances. You will be contacted as soon as possible if the doctor is unable to see you at the scheduled appointment. You will be notified of the cancellation and for rescheduling."
+  },
+  {
+    "number": 8,
+    "text": "HLWE shall not be held liable for any cancelled or rescheduled appointments."
+  },
+  {
+    "number": 9,
+    "text": "You also consent to be contacted via WhatsApp for appointment-related communications and relevant healthcare updates."
+  },
+  {
+    "number": 10,
+    "text": "The information that you have provided here will be used to facilitate your booking and for the preparation for your appointment. HLWE will protect your personal information according to the Personal Data Protection Act 2010 as outlined in our Personal Data Protection Notice."
+  },
+  {
+    "number": 11,
+    "text": "HLWE reserves the rights to review and amend its Terms of Use as and when needed to improve our service."
+  },
+  {
+    "text": "I agree to the terms of use and HLWE’s Personal Data Protection Notice relating to the Personal Data Protection Act 2010, and hereby consent that HLWE may collect, use and disclose my personal data provided herein to process follow up actions including but not limited to confirming my online appointment."
+  }
+]
