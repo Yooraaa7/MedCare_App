@@ -56,6 +56,7 @@ import 'package:medcare_app/screens/terms_and_policy/privacy_policy.dart';
 import 'package:medcare_app/screens/terms_and_policy/terms_screen.dart';
 import 'package:medcare_app/services/auth_service.dart';
 import 'package:medcare_app/services/data_service.dart';
+import 'package:medcare_app/screens/chatbot/chatbot.dart';
 
 // Paths that should be BLOCKED if logged in
 final authEntryPaths = {'/', '/register'};
@@ -327,6 +328,11 @@ class AppRouter {
             ),
           ),
         ],
+      ),
+
+      GoRoute(
+        path: '/chatbot',
+        builder: (context, state) => const ChatbotScreen(),
       ),
 
       GoRoute(

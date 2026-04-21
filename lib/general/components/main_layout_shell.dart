@@ -13,6 +13,11 @@ class MainLayoutShell extends StatelessWidget {
       bottomNavigationBar: CustomBottomBar(
         currentIndex: _calculateSelectedIndex(context),
       ),
+      // Add this to your main scaffold's floatingActionButton:
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.push('/chatbot'),
+        child: const Icon(Icons.chat_outlined),
+      ),
     );
   }
 
