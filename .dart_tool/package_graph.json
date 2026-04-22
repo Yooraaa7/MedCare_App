@@ -17,6 +17,7 @@
         "google_fonts",
         "http",
         "intl",
+        "lottie",
         "pdfrx",
         "qr_flutter",
         "slide_to_act",
@@ -52,6 +53,17 @@
         "stack_trace",
         "stream_channel",
         "test_api",
+        "vector_math"
+      ]
+    },
+    {
+      "name": "lottie",
+      "version": "3.3.3",
+      "dependencies": [
+        "archive",
+        "flutter",
+        "http",
+        "path",
         "vector_math"
       ]
     },
@@ -332,6 +344,15 @@
         "stream_channel",
         "string_scanner",
         "term_glyph"
+      ]
+    },
+    {
+      "name": "archive",
+      "version": "4.0.7",
+      "dependencies": [
+        "crypto",
+        "path",
+        "posix"
       ]
     },
     {
@@ -738,6 +759,15 @@
       ]
     },
     {
+      "name": "posix",
+      "version": "6.0.3",
+      "dependencies": [
+        "ffi",
+        "meta",
+        "path"
+      ]
+    },
+    {
       "name": "typed_data",
       "version": "1.4.0",
       "dependencies": [
@@ -803,15 +833,6 @@
       ]
     },
     {
-      "name": "archive",
-      "version": "4.0.7",
-      "dependencies": [
-        "crypto",
-        "path",
-        "posix"
-      ]
-    },
-    {
       "name": "xml",
       "version": "6.6.1",
       "dependencies": [
@@ -849,15 +870,6 @@
         "logging",
         "native_toolchain_c",
         "pub_semver"
-      ]
-    },
-    {
-      "name": "posix",
-      "version": "6.0.3",
-      "dependencies": [
-        "ffi",
-        "meta",
-        "path"
       ]
     },
     {

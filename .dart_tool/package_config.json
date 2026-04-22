@@ -296,6 +296,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "lottie",
+      "rootUri": "file:///C:/Users/Asus/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-3.3.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.9"
+    },
+    {
       "name": "markdown",
       "rootUri": "file:///C:/Users/Asus/AppData/Local/Pub/Cache/hosted/pub.dev/markdown-7.3.0",
       "packageUri": "lib/",

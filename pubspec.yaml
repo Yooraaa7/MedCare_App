@@ -25,6 +25,7 @@ dependencies:
   url_launcher: ^6.3.2
   uuid: ^4.5.2
   http: ^1.2.0
+  lottie: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +51,7 @@ flutter:
     - assets/sample/invoice.pdf
     - assets/data/specialties.json
     - assets/data/doctors.json
+    - assets/animations/
 
   fonts:
   - family: Poppins
