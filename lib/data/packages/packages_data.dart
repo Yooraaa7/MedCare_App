@@ -4,7 +4,7 @@ import 'package:medcare_app/models/package.dart';
 final List<Package> ourPackages = [
   Package(
     name: "DNA Decode Genetic Screening",
-    imagePath: "dna_package.jpg",
+    imagePath: "package1.png",
     category: PackageCategories.healthScreening,
     subCategories: [
       'DNA Decode Fit',
@@ -14,32 +14,32 @@ final List<Package> ourPackages = [
   ),
   Package(
     name: "Health Screening Package",
-    imagePath: "hsc.jpg",
+    imagePath: "package2.png",
     category: PackageCategories.healthScreening,
   ),
   Package(
     name: "Cancer Markers for Women and Men",
-    imagePath: "cancer.jpg",
+    imagePath: "package3.png",
     category: PackageCategories.healthScreening,
   ),
   Package(
     name: "Diabetes Screening Package",
-    imagePath: "diabetes.jpg",
+    imagePath: "package4.png",
     category: PackageCategories.healthScreening,
   ),
   Package(
     name: "Osteoporosis Screening Package",
-    imagePath: "osteo.jpg",
+    imagePath: "package5.png",
     category: PackageCategories.healthScreening,
   ),
   Package(
     name: "Pre-marital Screening Package",
-    imagePath: "premarital.jpg",
+    imagePath: "package6.png",
     category: PackageCategories.healthScreening,
   ),
   Package(
     name: "Apolipoprotein / Lipoprotein Studies",
-    imagePath: "apolipoprotein.jpg",
+    imagePath: "package7.png",
     category: PackageCategories.healthScreening,
   ),
 ];
@@ -48,12 +48,12 @@ final List<Package> ourPackages = [
 final List<Package> childrenPackages = [
   Package(
     name: "Children's Screening Package",
-    imagePath: "children.jpg",
+    imagePath: "package8.png",
     category: PackageCategories.healthScreening,
   ),
   Package(
     name: "Weight Management Wellness Screening",
-    imagePath: "weight.jpg",
+    imagePath: "package9.png",
     category: PackageCategories.healthScreening,
   ),
 ];
@@ -62,12 +62,12 @@ final List<Package> childrenPackages = [
 final List<Package> wellnessPackages = [
   Package(
     name: "Proactive Lifestyle Screening",
-    imagePath: "proactive.jpg",
+    imagePath: "package10.png",
     category: PackageCategories.healthScreening,
   ),
   Package(
     name: "Cognitive Screening Test",
-    imagePath: "cognitive.jpg",
+    imagePath: "package11.png",
     category: PackageCategories.healthScreening,
   ),
 ];

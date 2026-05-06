@@ -17,8 +17,8 @@ class PackagesScreen extends StatefulWidget {
 
 class _PackagesScreenState extends State<PackagesScreen> {
   final List<String> bannerImages = [
-    'assets/images/banners/dna_banner.jpg',
-    'assets/images/banners/proactive_banner.jpg',
+    'assets/images/banners/pkg_banner.png',
+    'assets/images/banners/pkg_banner2.png',
   ];
 
   bool showAll = false;
