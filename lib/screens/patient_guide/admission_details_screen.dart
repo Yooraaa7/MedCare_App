@@ -26,7 +26,7 @@ class AdmissionDetailScreen extends StatelessWidget {
                 ),
                 AppSpacing.medium,
                 buildList([
-                  "Mycard or Mykid (NRIC) (Malaysian citizen)",
+                  "MyKad or MyKid (NRIC) (Malaysian citizen)",
                   "Passport if not a Malaysian citizen",
                   "Doctor’s referral letter and GL / deposit for self-payment",
                   "Appointment card",

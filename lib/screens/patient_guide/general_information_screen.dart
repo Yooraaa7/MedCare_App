@@ -29,7 +29,7 @@ class GeneralInfoScreen extends StatelessWidget {
               title: "Accident & Emergency Service",
               children: const [
                 Text(
-                  "Doctors are available 24 hours a day to provide emergency management.",
+                  "MedCare provides 24-hour accident and emergency services for all patients. Please proceed directly to the A&E department located at the main entrance.",
                 ),
               ],
             ),
@@ -40,13 +40,7 @@ class GeneralInfoScreen extends StatelessWidget {
               centerContent: true,
               children: const [
                 Text(
-                  "For Ambulance Service to and from the Hospital, please call:",
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 4),
-                Text(
-                  "+604 - 652 6868",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  "MedCare operates an ambulance service round the clock. The ambulance is fully equipped with essential life-saving equipment.",
                 ),
               ],
             ),
@@ -56,7 +50,7 @@ class GeneralInfoScreen extends StatelessWidget {
               title: "Air-Conditioned Room / Ward",
               children: const [
                 Text(
-                  "The hospital has been upgraded to a 24-hour fully air-conditioned environment.",
+                  "All rooms have been upgraded to full air-conditioning for the comfort of our patients. For room selection assistance, please approach the front desk.",
                 ),
               ],
             ),
@@ -66,17 +60,7 @@ class GeneralInfoScreen extends StatelessWidget {
               title: "Beverage / Snack Vending Machines",
               children: const [
                 Text(
-                  "Available at our Cafeteria, Ground Floor corridor toward Haemodialysis Unit, and 1st Floor.",
-                ),
-              ],
-            ),
-
-            sectionBox(
-              context: context,
-              title: "Food Service (Pork Free)",
-              children: const [
-                Text(
-                  "Variety of meal choices are provided to meet patients’ and lodgers’ needs. Lodger meals are charged accordingly. Do not use hospital kitchenware if you bring your own food. Kitchen appliances are not allowed.",
+                  "Beverage/Snack vendor machines are available at our Cafeteria and Ground Floor along the corridor.",
                 ),
               ],
             ),
@@ -86,7 +70,7 @@ class GeneralInfoScreen extends StatelessWidget {
               title: "Locker Service",
               children: const [
                 Text(
-                  "Smart Lockers are provided to private, 2-bedded, and 4-bedded room patients. QR wristbands safeguard lockers. Common ward patients receive key lockers. Hospital is not responsible for losses.",
+                  "Locker facilities (small, medium, large) are available at a minimal charge. The hospital is not responsible for loss or damage of valuables.",
                 ),
               ],
             ),
@@ -96,7 +80,7 @@ class GeneralInfoScreen extends StatelessWidget {
               title: "Medication Service",
               children: const [
                 Text(
-                  "Bring your medications in original packaging and hand them to nursing staff upon admission.",
+                  "Please bring all existing prescriptions during admission. Our pharmacy team is available to assist at any time.",
                 ),
               ],
             ),
@@ -106,7 +90,7 @@ class GeneralInfoScreen extends StatelessWidget {
               title: "Television",
               children: const [
                 Text(
-                  "Televisions with Astro channels are provided in private, 2-bedded, and 4-bedded rooms free of charge.",
+                  "Television sets are provided in all standard wards and rooms. Channel lists and rates are available at the front desk.",
                 ),
               ],
             ),
@@ -116,7 +100,7 @@ class GeneralInfoScreen extends StatelessWidget {
               title: "Free Wi-Fi",
               children: const [
                 Text(
-                  "Free Wi-Fi internet service is available throughout the hospital premises.",
+                  "Complimentary Wi-Fi internet service is available throughout MedCare Hospital for all patients and visitors.",
                 ),
               ],
             ),

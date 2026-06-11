@@ -23,11 +23,11 @@ class OutpatientRegistrationScreen extends StatelessWidget {
               title: "Required Documents",
               children: [
                 Text(
-                  'Please bring with you the following documents to facilitate proper and smooth admission:',
+                  'Please bring with you the following documents during Outpatient Registration to facilitate proper registration:',
                 ),
                 AppSpacing.medium,
                 buildList([
-                  "Mycard or Mykid (NRIC) (Malaysian citizen)",
+                  "MyKad or MyKid (NRIC) (Malaysian citizen)",
                   "Passport if not a Malaysian citizen",
                   "Doctor’s referral letter and GL / deposit for self-payment",
                   "Appointment card",
@@ -41,7 +41,7 @@ class OutpatientRegistrationScreen extends StatelessWidget {
               title: 'Outpatient Registration Roadmap',
               children: [
                 imageCard(
-                  "assets/images/workflows/outpatient_workflow.png",
+                  "assets/images/workflows/or_roadmap.png",
                   context,
                 ),
               ],
@@ -52,25 +52,7 @@ class OutpatientRegistrationScreen extends StatelessWidget {
               context: context,
               title: "Health Screening Centre Roadmap",
               children: [
-                imageCard("assets/images/workflows/hsc_flow.jpg", context),
-              ],
-            ),
-
-            // Rehabilitation Centre Roadmap
-            sectionBox(
-              context: context,
-              title: "Rehabilitation Centre Roadmap",
-              children: [
-                imageCard("assets/images/workflows/physio_flow.png", context),
-              ],
-            ),
-
-            // Dental Centre Roadmap
-            sectionBox(
-              context: context,
-              title: "Dental Centre Roadmap",
-              children: [
-                imageCard("assets/images/workflows/dental_flow.png", context),
+                imageCard("assets/images/workflows/hs_roadmap.png", context),
               ],
             ),
           ],

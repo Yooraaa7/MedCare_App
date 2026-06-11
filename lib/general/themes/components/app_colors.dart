@@ -9,4 +9,5 @@ class AppColors {
   static const Color strongRed = Color.fromARGB(255, 248, 51, 54);
   static const Color green = Color.fromARGB(255, 91, 190, 106);
   static const Color defaultWhite = Color(0xFFF9FAFB);
+  static const Color linkBlue = Color.fromARGB(255, 27, 114, 255);
 }
