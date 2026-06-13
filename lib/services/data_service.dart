@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:medcare_app/data/sample_data.dart';
 import 'package:medcare_app/models/appointments/base_appointment.dart';
@@ -76,6 +78,7 @@ class DataService {
     ),
   ];
 
+  // ── Specialties — still loaded from local JSON ───────────────────────────
   static Future<void> initService() async {
     final String response = await rootBundle.loadString(
       'assets/data/specialties.json',
@@ -84,19 +87,31 @@ class DataService {
     allSpecialties = data.map((json) => Specialty.fromJson(json)).toList();
   }
 
+  // ── Doctors — now loaded from Firestore with local JSON fallback ─────────
   static Future<void> initDoctor() async {
-    final String response = await rootBundle.loadString(
-      'assets/data/doctors.json',
-    );
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('doctors')
+          .get();
 
-    // 1. Decode the string into a Map
-    final Map<String, dynamic> decodedData = json.decode(response);
+      allDoctors = snapshot.docs
+          .map((doc) => Doctor.fromJson(doc.data()))
+          .toList();
 
-    // 2. Access the list inside the "doctors" key
-    final List<dynamic> doctorList = decodedData['doctors'];
+      debugPrint('✅ Doctors loaded from Firestore: ${allDoctors.length}');
+    } catch (e) {
+      // Fallback to local JSON if Firestore is unavailable
+      debugPrint('❌ Firestore failed, falling back to local JSON: $e');
 
-    // 3. Map the list to Doctor objects
-    allDoctors = doctorList.map((json) => Doctor.fromJson(json)).toList();
+      final String response = await rootBundle.loadString(
+        'assets/data/doctors.json',
+      );
+      final Map<String, dynamic> decodedData = json.decode(response);
+      final List<dynamic> doctorList = decodedData['doctors'];
+      allDoctors = doctorList.map((json) => Doctor.fromJson(json)).toList();
+
+      debugPrint('✅ Doctors loaded from local JSON: ${allDoctors.length}');
+    }
   }
 
   // Group doctors based on their specialty
@@ -107,7 +122,6 @@ class DataService {
     final Map<Specialty, List<Doctor>> map = {};
 
     for (final specialty in DataService.allSpecialties) {
-      // If a specialty filter exists, skip others
       if (specialtyFilter != null &&
           specialty.name.toLowerCase() != specialtyFilter.name.toLowerCase()) {
         continue;
@@ -124,7 +138,6 @@ class DataService {
         return matchesSpecialty && matchesSearch;
       }).toList();
 
-      // If no doctors match, don't put the specialty inside
       if (doctorsInSpecialty.isNotEmpty) {
         map[specialty] = doctorsInSpecialty;
       }
@@ -140,8 +153,6 @@ class DataService {
     final filtered = allAppointments.where((a) => a.status == status).toList();
 
     return filtered..sort((a, b) {
-      // 1. Primary Sort: Payment Status (Unpaid first)
-      // If 'a' is unpaid and 'b' is paid, 'a' should come first (-1)
       if (a.paymentStatus == PaymentStatus.unpaid &&
           b.paymentStatus == PaymentStatus.paid) {
         return -1;
@@ -150,8 +161,6 @@ class DataService {
           b.paymentStatus == PaymentStatus.unpaid) {
         return 1;
       }
-
-      // 2. Secondary Sort: Date (based on 'order' parameter)
       if (order == 'asc') {
         return a.date.compareTo(b.date);
       } else {
@@ -161,18 +170,15 @@ class DataService {
   }
 
   static List<BaseAppointment> getActiveBookings({String order = 'asc'}) {
-    // Define which statuses count as "Active"
     const activeStatuses = [
       AppointmentStatus.upcoming,
       AppointmentStatus.registered,
     ];
 
-    // Filter the master list
     final List<BaseAppointment> activeList = allAppointments
         .where((a) => activeStatuses.contains(a.status))
         .toList();
 
-    // Sort the combined result so dates aren't jumbled
     return activeList..sort(
       (a, b) =>
           order == 'asc' ? a.date.compareTo(b.date) : b.date.compareTo(a.date),
@@ -182,13 +188,10 @@ class DataService {
   static bool isSlotClashing(DateTime date, String timeSlot) {
     return allAppointments.any(
       (appointment) =>
-          // Check if the date is the same (ignoring time hours/minutes of the DateTime object)
           appointment.date.year == date.year &&
           appointment.date.month == date.month &&
           appointment.date.day == date.day &&
-          // Check if the string time slot is identical
           appointment.timeSlot == timeSlot &&
-          // Only clash with active bookings, not canceled ones
           appointment.status != AppointmentStatus.cancelled,
     );
   }
