@@ -17,6 +17,7 @@ import 'package:medcare_app/screens/reminders/components/generate_date_times.dar
 import 'package:medcare_app/screens/reminders/components/month_day_picker.dart';
 import 'package:medcare_app/screens/reminders/components/save_cancel_row.dart';
 import 'package:uuid/v4.dart';
+import 'package:medcare_app/services/notification_service.dart';
 
 class CustomForm extends StatefulWidget {
   final Reminder? reminder;
@@ -69,7 +70,7 @@ class _CustomFormState extends State<CustomForm> {
     super.dispose();
   }
 
-  void handleSave() {
+  Future<void> handleSave() async {
     setState(() => _validateWeekdays = _validateMonthDays = true);
 
     // 1. Validations
@@ -105,6 +106,7 @@ class _CustomFormState extends State<CustomForm> {
       notificationType: List.from(selectedNotifications),
       enabled: widget.reminder?.enabled ?? true,
     );
+    await NotificationService.scheduleReminderNotification(newReminder);
 
     // 4. Update Global List
     setState(() {

@@ -15,7 +15,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
     return Scaffold(
       appBar: const CustomAppbar(title: 'Privacy Policy'),
       body: PdfViewer.asset(
-        'assets/terms/HLWE_Personal_Data_Protection_Notice.pdf',
+        'assets/terms/MEDCARE_Hospital_Privacy_Policy.pdf',
       ),
     );
   }

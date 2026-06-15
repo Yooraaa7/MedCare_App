@@ -27,6 +27,8 @@ void main() async {
     await NotificationService.init();
     await DataService.initService();
     await DataService.initDoctor();
+    await DataService.initVaccines();   // ← add this
+    await DataService.initPackages(); 
   } catch (e) {
     debugPrint("Initialization Error: $e");
   }

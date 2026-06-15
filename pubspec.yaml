@@ -49,7 +49,7 @@ flutter:
     - assets/images/workflows/
     - assets/terms/faq.json
     - assets/terms/terms_of_use.json
-    - assets/terms/HLWE_Personal_Data_Protection_Notice.pdf
+    - assets/terms/MEDCARE_Hospital_Privacy_Policy.pdf
     - assets/sample/invoice.pdf
     - assets/data/specialties.json
     - assets/data/doctors.json

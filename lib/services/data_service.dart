@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:medcare_app/data/sample_data.dart';
 import 'package:medcare_app/models/appointments/base_appointment.dart';
 import 'package:medcare_app/models/doctor.dart';
+import 'package:medcare_app/models/package.dart';
 import 'package:medcare_app/models/payment_methods/card_details.dart';
 import 'package:medcare_app/models/payment_methods/insurance_details.dart';
 import 'package:medcare_app/models/reminder.dart';
@@ -16,13 +17,11 @@ class DataService {
   // Global access point for data
   static List<Specialty> allSpecialties = [];
   static List<Doctor> allDoctors = [];
-  static List<BaseAppointment> allAppointments = [
-    SampleData.doctorAppointment,
-    SampleData.doctorAppointment2,
-    SampleData.packageAppointment,
-    SampleData.vaccineAppointment,
-    SampleData.vaccineAppointment2,
-  ];
+  static List<Vaccine> allVaccines = [];
+  static List<Package> allPackages = [];
+  static List<Package> allChildrenPackages = [];
+  static List<Package> allWellnessPackages = [];
+  static List<BaseAppointment> allAppointments = [];
   static List<Reminder> allReminders = [
     Reminder(
       id: const UuidV4().generate(),
@@ -78,7 +77,7 @@ class DataService {
     ),
   ];
 
-  // ── Specialties — still loaded from local JSON ───────────────────────────
+  // ── Specialties — local JSON ──────────────────────────────────────────────
   static Future<void> initService() async {
     final String response = await rootBundle.loadString(
       'assets/data/specialties.json',
@@ -87,34 +86,79 @@ class DataService {
     allSpecialties = data.map((json) => Specialty.fromJson(json)).toList();
   }
 
-  // ── Doctors — now loaded from Firestore with local JSON fallback ─────────
+  // ── Doctors — Firestore with local JSON fallback ──────────────────────────
   static Future<void> initDoctor() async {
     try {
       final snapshot = await FirebaseFirestore.instance
           .collection('doctors')
           .get();
-
       allDoctors = snapshot.docs
           .map((doc) => Doctor.fromJson(doc.data()))
           .toList();
-
       debugPrint('✅ Doctors loaded from Firestore: ${allDoctors.length}');
     } catch (e) {
-      // Fallback to local JSON if Firestore is unavailable
       debugPrint('❌ Firestore failed, falling back to local JSON: $e');
-
       final String response = await rootBundle.loadString(
         'assets/data/doctors.json',
       );
       final Map<String, dynamic> decodedData = json.decode(response);
       final List<dynamic> doctorList = decodedData['doctors'];
       allDoctors = doctorList.map((json) => Doctor.fromJson(json)).toList();
-
       debugPrint('✅ Doctors loaded from local JSON: ${allDoctors.length}');
+    }
+
+    // Populate appointments after doctors are loaded
+    allAppointments = [
+      SampleData.doctorAppointment,
+      SampleData.doctorAppointment2,
+      SampleData.packageAppointment,
+      SampleData.vaccineAppointment,
+      SampleData.vaccineAppointment2,
+    ];
+  }
+
+  // ── Vaccines — Firestore with SampleData fallback ─────────────────────────
+  static Future<void> initVaccines() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('vaccines')
+          .get();
+      allVaccines = snapshot.docs
+          .map((doc) => Vaccine.fromJson(doc.data()))
+          .toList();
+      debugPrint('✅ Vaccines loaded from Firestore: ${allVaccines.length}');
+    } catch (e) {
+      debugPrint('❌ Vaccines Firestore failed, using SampleData: $e');
+      allVaccines = List.from(SampleData.vaccines);
+      debugPrint('✅ Vaccines loaded from SampleData: ${allVaccines.length}');
     }
   }
 
-  // Group doctors based on their specialty
+  // ── Packages — Firestore with local fallback ──────────────────────────────
+  static Future<void> initPackages() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('packages')
+          .get();
+      final all = snapshot.docs
+          .map((doc) => Package.fromJson(doc.data()))
+          .toList();
+
+      allPackages         = all.where((p) => p.group == 'our').toList();
+      allChildrenPackages = all.where((p) => p.group == 'children').toList();
+      allWellnessPackages = all.where((p) => p.group == 'wellness').toList();
+
+      debugPrint('✅ Packages loaded from Firestore: ${all.length} '
+          '(our: ${allPackages.length}, '
+          'children: ${allChildrenPackages.length}, '
+          'wellness: ${allWellnessPackages.length})');
+    } catch (e) {
+      debugPrint('❌ Packages Firestore failed, using local data: $e');
+      // Fallback — local packages_data.dart values remain unchanged
+    }
+  }
+
+  // ── Group doctors by specialty ────────────────────────────────────────────
   static Map<Specialty, List<Doctor>> getGroupedDoctors({
     String searchQuery = '',
     Specialty? specialtyFilter,
@@ -130,11 +174,9 @@ class DataService {
       final doctorsInSpecialty = allDoctors.where((doc) {
         final matchesSpecialty =
             doc.specialty.name.toLowerCase() == specialty.name.toLowerCase();
-
         final matchesSearch =
             searchQuery.isEmpty ||
             doc.nameEng.toLowerCase().contains(searchQuery.toLowerCase());
-
         return matchesSpecialty && matchesSearch;
       }).toList();
 
@@ -197,9 +239,11 @@ class DataService {
   }
 
   static Vaccine? findVaccineById(String id) {
-    if (SampleData.vaccines.isNotEmpty) {
-      return SampleData.vaccines.firstWhere((v) => v.id == id);
-    } else {
+    final vaccines = allVaccines.isNotEmpty ? allVaccines : SampleData.vaccines;
+    if (vaccines.isEmpty) return null;
+    try {
+      return vaccines.firstWhere((v) => v.id == id);
+    } catch (_) {
       return null;
     }
   }
