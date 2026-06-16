@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medcare_app/services/appointment_service.dart';
 import 'package:medcare_app/services/data_service.dart';
 import 'package:medcare_app/general/components/custom_appbar.dart';
 import 'package:medcare_app/general/components/custom_snackbar.dart';
@@ -12,7 +13,7 @@ import 'package:medcare_app/screens/book_appointments/components/base_booking_fo
 
 class BookAppointmentsScreen extends StatefulWidget {
   final Doctor doctor;
-  final DoctorAppointment? existingAppointment; // For Edit Mode
+  final DoctorAppointment? existingAppointment;
 
   const BookAppointmentsScreen({
     super.key,
@@ -26,39 +27,42 @@ class BookAppointmentsScreen extends StatefulWidget {
 
 class _BookAppointmentsScreenState extends State<BookAppointmentsScreen> {
   final _formKey = GlobalKey<FormState>();
-
-  // Local state for doctor-specific fields not covered by the base draft
   String? _reasonOfVisit;
 
-  void _onFormSubmit(BaseAppointmentDraft draft) {
-    // 1. Create the specialized DoctorAppointment object
+  Future<void> _onFormSubmit(BaseAppointmentDraft draft) async {
     final appointment = DoctorAppointment.fromDraft(
       draft: draft,
       doctor: widget.doctor,
       reasonOfVisit: _reasonOfVisit!,
     );
 
-    // 2. Add or Update in the DataService
     if (widget.existingAppointment != null) {
+      // Update existing — local only for now
       final index = DataService.allAppointments.indexWhere(
         (a) => a.id == draft.id,
       );
       if (index != -1) DataService.allAppointments[index] = appointment;
-      showCustomSnackbar(
-        context,
-        'Appointment updated successfully!',
-        type: SnackbarType.success,
-      );
+      if (mounted) {
+        showCustomSnackbar(
+          context,
+          'Appointment updated successfully!',
+          type: SnackbarType.success,
+        );
+      }
     } else {
+      // New appointment — add locally AND save to Firestore
       DataService.allAppointments.add(appointment);
-      showCustomSnackbar(
-        context,
-        'Appointment booked successfully!',
-        type: SnackbarType.success,
-      );
+      await AppointmentService.saveAppointment(appointment); // ← Firestore
+      if (mounted) {
+        showCustomSnackbar(
+          context,
+          'Appointment booked successfully!',
+          type: SnackbarType.success,
+        );
+      }
     }
 
-    context.go('/appointments');
+    if (mounted) context.go('/appointments');
   }
 
   @override
@@ -78,7 +82,6 @@ class _BookAppointmentsScreenState extends State<BookAppointmentsScreen> {
             : 'Book Now!',
         onSubmit: _onFormSubmit,
         afterSections: [
-          // Doctor-specific field: Reason of Visit
           Text(
             'Describe Reason of Visit',
             style: Theme.of(context).textTheme.titleMedium,

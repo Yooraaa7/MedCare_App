@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medcare_app/main.dart';
+import 'package:medcare_app/services/appointment_service.dart';
 import 'package:medcare_app/services/data_service.dart';
-import 'package:medcare_app/data/sample_data.dart';
 import 'package:medcare_app/general/components/custom_appbar.dart';
 import 'package:medcare_app/general/components/custom_snackbar.dart';
 import 'package:medcare_app/general/themes/components/app_spacing.dart';
@@ -12,7 +12,7 @@ import 'package:medcare_app/screens/book_appointments/components/base_booking_fo
 import 'package:medcare_app/screens/book_appointments/components/vaccine_picker.dart';
 
 class BookVaccinesScreen extends StatefulWidget {
-  final VaccineAppointment? existingAppointment; // For edit support
+  final VaccineAppointment? existingAppointment;
 
   const BookVaccinesScreen({super.key, this.existingAppointment});
 
@@ -25,52 +25,56 @@ class _BookVaccinesScreenState extends State<BookVaccinesScreen> {
   List<Vaccine> _selectedVaccines = [];
   bool _validateVaccine = false;
 
-  // Allow all error states to be in sync
   bool prevalidation() {
-    // Vaccine-specific validation
     if (_selectedVaccines.isEmpty) {
-      setState(() {
-        _validateVaccine = true;
-      });
-
+      setState(() => _validateVaccine = true);
       return false;
     }
-
     return true;
   }
 
-  void _onFormSubmit(BaseAppointmentDraft draft) {
-    // Instantiate a package appointment
+  Future<void> _onFormSubmit(BaseAppointmentDraft draft) async {
     final appointment = VaccineAppointment.fromDraft(
       draft: draft,
       selectedVaccines: _selectedVaccines,
     );
 
-    // Logic for saving/updating
     if (widget.existingAppointment != null) {
+      // Update existing — local only for now
       final index = DataService.allAppointments.indexWhere(
         (a) => a.id == draft.id,
       );
       if (index != -1) DataService.allAppointments[index] = appointment;
-      showCustomSnackbar(
-        context,
-        'Appointment updated successfully!',
-        type: SnackbarType.success,
-      );
+      if (mounted) {
+        showCustomSnackbar(
+          context,
+          'Appointment updated successfully!',
+          type: SnackbarType.success,
+        );
+      }
     } else {
+      // New appointment — add locally AND save to Firestore
       DataService.allAppointments.add(appointment);
-      showCustomSnackbar(
-        context,
-        'Appointment booked successfully!',
-        type: SnackbarType.success,
-      );
+      await AppointmentService.saveAppointment(appointment); // ← Firestore
+      if (mounted) {
+        showCustomSnackbar(
+          context,
+          'Appointment booked successfully!',
+          type: SnackbarType.success,
+        );
+      }
     }
 
-    context.go('/appointments');
+    if (mounted) context.go('/appointments');
   }
 
   @override
   Widget build(BuildContext context) {
+    // Use Firestore vaccines if available, otherwise fall back to sample data
+    final vaccines = DataService.allVaccines.isNotEmpty
+        ? DataService.allVaccines
+        : DataService.allVaccines; // DataService.allVaccines already has fallback
+
     return Scaffold(
       appBar: CustomAppbar(
         title: widget.existingAppointment != null
@@ -82,9 +86,8 @@ class _BookVaccinesScreenState extends State<BookVaccinesScreen> {
               padding: const EdgeInsets.all(30),
               child: Column(
                 children: [
-                  VaccinePicker(vaccines: SampleData.vaccines, hasError: false),
+                  VaccinePicker(vaccines: vaccines, hasError: false),
                   AppSpacing.xlarge,
-
                   Card(
                     elevation: 6,
                     child: Padding(
@@ -117,7 +120,6 @@ class _BookVaccinesScreenState extends State<BookVaccinesScreen> {
             )
           : BaseBookingForm(
               formKey: _formKey,
-              // Use the first vaccine to get the location and contact
               subject: _selectedVaccines.isNotEmpty
                   ? _selectedVaccines.first
                   : 'Vaccine',
@@ -129,7 +131,7 @@ class _BookVaccinesScreenState extends State<BookVaccinesScreen> {
               onSubmit: _onFormSubmit,
               beforeSections: [
                 VaccinePicker(
-                  vaccines: SampleData.vaccines,
+                  vaccines: vaccines,
                   hasError: _validateVaccine && _selectedVaccines.isEmpty,
                   initialSelection:
                       widget.existingAppointment is VaccineAppointment

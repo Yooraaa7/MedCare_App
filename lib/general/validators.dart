@@ -30,7 +30,6 @@ class Validators {
       (String? value) {
         if (value != null) {
           int num = int.parse(value);
-
           if (num < min || num > max) {
             return '$fieldName must be between $min - $max';
           }
@@ -40,11 +39,9 @@ class Validators {
 
   // Name pattern check
   static Validator name([String fieldName = 'Name']) => (String? value) {
-    // Required check
     final requiredError = required('Name')(value);
     if (requiredError != null) return requiredError;
 
-    // Length check
     final lengthError = length('Name', 2, 50)(value);
     if (lengthError != null) return lengthError;
 
@@ -68,9 +65,8 @@ class Validators {
     return null;
   };
 
-  // Email pattern check
+  // Email pattern check — required
   static Validator email() => (String? value) {
-    // Required check
     final requiredError = required('Email')(value);
     if (requiredError != null) return requiredError;
 
@@ -83,23 +79,28 @@ class Validators {
     return null;
   };
 
+  // Email pattern check — optional (can be left blank)
+  static Validator emailOptional() => (String? value) {
+    if (value == null || value.trim().isEmpty) return null; // optional
+    if (!RegExp(
+      r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+    ).hasMatch(value.trim())) {
+      return 'Invalid email format.';
+    }
+    return null;
+  };
+
   static Validator icOrPassport() => (String? value) {
-    // Check required first
     final error = required('IC/Passport')(value);
     if (error != null) return error;
 
     final trimmed = value!.trim();
-
-    // Malaysian IC (12 digits)
     final icRegex = RegExp(r'^\d{12}$');
-
-    // Simple foreign passport: letters & numbers 6–9 chars
     final passportRegex = RegExp(r'^[A-Za-z0-9]{6,9}$');
 
     if (!icRegex.hasMatch(trimmed) && !passportRegex.hasMatch(trimmed)) {
       return 'Invalid IC or Passport number.';
     }
-
     return null;
   };
 
@@ -113,7 +114,6 @@ class Validators {
     if (!phoneRegex.hasMatch(trimmed)) {
       return 'Invalid phone format.';
     }
-
     return null;
   };
 
@@ -122,18 +122,15 @@ class Validators {
     if (value == null || value.isEmpty)
       return "Card number should not be empty.";
 
-    // Remove spaces/dashes
     final clean = value.replaceAll(RegExp(r'\D'), '');
 
     if (clean.length < 13 || clean.length > 19) {
       return "Invalid card number length.";
     }
 
-    // Check if it matches known types (Visa starts with 4, Master with 5, etc.)
     if (!RegExp(r'^(4|5[1-5]|2[2-7]|3[47]|6)').hasMatch(clean)) {
       return "Unsupported card type.";
     }
-
     return null;
   }
 
@@ -143,7 +140,6 @@ class Validators {
       return "Expiry date should not be empty.";
     }
 
-    // first 2 digits will be the month, last 2 digits as year
     final match = RegExp(r'^(0[1-9]|1[0-2])\/([0-9]{2})$').firstMatch(value);
     if (match == null) {
       return "Invalid expiry date format.";
@@ -151,15 +147,12 @@ class Validators {
 
     final month = int.parse(match.group(1)!);
     final year = int.parse(match.group(2)!);
-
     final now = DateTime.now();
-    // Ensure the last 2 digits align with year input
     final currentYear = now.year % 100;
 
     if (year < currentYear || (year == currentYear && month < now.month)) {
       return "Card expired.";
     }
-
     return null;
   }
 
@@ -177,12 +170,9 @@ class Validators {
     if (value == null || value.trim().isEmpty) {
       return 'Policy number is required.';
     }
-
-    // Allow letters + numbers + dash/slash
     if (!RegExp(r'^[A-Za-z0-9#\-\/]+$').hasMatch(value.trim())) {
       return 'Invalid policy number format.';
     }
-
     return null;
   };
 
@@ -192,8 +182,8 @@ class Validators {
       return 'Expiry date is required.';
     }
 
-    // MM / YYYY
-    final match = RegExp(r'^(0[1-9]|1[0-2])\s*\/\s*(\d{4})$').firstMatch(value);
+    final match =
+        RegExp(r'^(0[1-9]|1[0-2])\s*\/\s*(\d{4})$').firstMatch(value);
 
     if (match == null) {
       return 'Invalid expiry date format.';
@@ -201,25 +191,21 @@ class Validators {
 
     final month = int.parse(match.group(1)!);
     final year = int.parse(match.group(2)!);
-
     final now = DateTime.now();
-    final expiryDate = DateTime(year, month + 1, 0); // last day of month
+    final expiryDate = DateTime(year, month + 1, 0);
 
     if (expiryDate.isBefore(now)) {
       return 'Insurance has expired.';
     }
-
     return null;
   };
 
-  // Password rules: min length, uppercase, lowercase, special char
+  // Password rules
   static Validator password({int minLength = 12, int maxLength = 15}) =>
       (String? value) {
-        // Required check
         final requiredError = required('Password')(value);
         if (requiredError != null) return requiredError;
 
-        // Length check
         final lengthError = length('Password', 2, 50)(value);
         if (lengthError != null) return lengthError;
 
@@ -248,7 +234,7 @@ class Validators {
     };
   }
 
-  // Combines multiple validators and returns the first error message
+  // Combines multiple validators
   static Validator combine(List<Validator> validators) {
     return (String? value) {
       for (final validator in validators) {

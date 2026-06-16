@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medcare_app/services/appointment_service.dart';
 import 'package:medcare_app/services/data_service.dart';
 import 'package:medcare_app/general/components/custom_appbar.dart';
 import 'package:medcare_app/general/components/custom_snackbar.dart';
@@ -32,24 +33,17 @@ class _BookPackageScreenState extends State<BookPackageScreen> {
   @override
   void initState() {
     super.initState();
-
     final subCats = widget.package.subCategories;
 
     if (subCats != null && subCats.isNotEmpty) {
-      // Try to find the "Real String" from the list if a type was passed
       if (widget.selectedType != null && widget.selectedType!.isNotEmpty) {
         _selectedType = subCats.firstWhere(
-          (realString) =>
-              realString.toLowerCase().contains(widget.selectedType ?? ''),
-          orElse: () => subCats.first, // Fallback if no match found
+          (s) => s.toLowerCase().contains(widget.selectedType ?? ''),
+          orElse: () => subCats.first,
         );
-      }
-      // Use the existing appointment value
-      else if (widget.existingAppointment?.selectedSubcategory != null) {
+      } else if (widget.existingAppointment?.selectedSubcategory != null) {
         _selectedType = widget.existingAppointment!.selectedSubcategory;
-      }
-      // Final default to the first in the list
-      else {
+      } else {
         _selectedType = subCats.first;
       }
     } else {
@@ -57,8 +51,7 @@ class _BookPackageScreenState extends State<BookPackageScreen> {
     }
   }
 
-  void _onFormSubmit(BaseAppointmentDraft draft) {
-    // Check if subcategories exist and one is selected
+  Future<void> _onFormSubmit(BaseAppointmentDraft draft) async {
     if (widget.package.subCategories != null &&
         widget.package.subCategories!.isNotEmpty &&
         _selectedType == null) {
@@ -70,34 +63,39 @@ class _BookPackageScreenState extends State<BookPackageScreen> {
       return;
     }
 
-    // Instantiate a package appointment
     final appointment = PackageAppointment.fromDraft(
       draft: draft,
       package: widget.package,
       selectedSubcategory: _selectedType,
     );
 
-    // Logic for saving/updating
     if (widget.existingAppointment != null) {
+      // Update existing — local only for now
       final index = DataService.allAppointments.indexWhere(
         (a) => a.id == draft.id,
       );
       if (index != -1) DataService.allAppointments[index] = appointment;
-      showCustomSnackbar(
-        context,
-        'Appointment updated successfully!',
-        type: SnackbarType.success,
-      );
+      if (mounted) {
+        showCustomSnackbar(
+          context,
+          'Appointment updated successfully!',
+          type: SnackbarType.success,
+        );
+      }
     } else {
+      // New appointment — add locally AND save to Firestore
       DataService.allAppointments.add(appointment);
-      showCustomSnackbar(
-        context,
-        'Appointment booked successfully!',
-        type: SnackbarType.success,
-      );
+      await AppointmentService.saveAppointment(appointment); // ← Firestore
+      if (mounted) {
+        showCustomSnackbar(
+          context,
+          'Appointment booked successfully!',
+          type: SnackbarType.success,
+        );
+      }
     }
 
-    context.go('/appointments');
+    if (mounted) context.go('/appointments');
   }
 
   @override
@@ -117,7 +115,6 @@ class _BookPackageScreenState extends State<BookPackageScreen> {
             : 'Book Now!',
         onSubmit: _onFormSubmit,
         beforeSections: [
-          // Package Type Selection
           if (widget.package.subCategories != null &&
               widget.package.subCategories!.isNotEmpty) ...[
             PackageTypePicker(

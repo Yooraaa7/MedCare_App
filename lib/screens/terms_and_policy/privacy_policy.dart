@@ -14,9 +14,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppbar(title: 'Privacy Policy'),
-      body: PdfViewer.asset(
-        'assets/terms/MEDCARE_Hospital_Privacy_Policy.pdf',
-      ),
+      body: PdfViewer.asset('assets/terms/MEDCARE_Hospital_Privacy_Policy.pdf'),
     );
   }
 }
