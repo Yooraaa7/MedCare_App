@@ -65,7 +65,7 @@ class _PolicyCheckboxState extends State<PolicyCheckbox> {
               children: [
                 const TextSpan(
                   text:
-                      "By creating an account, I have read and agreed to Hospital Lam Wah Ee's ",
+                      "By creating an account, I have read and agreed to MEDCARE Hospital's ",
                 ),
                 TextSpan(
                   text: 'Terms of Use',
