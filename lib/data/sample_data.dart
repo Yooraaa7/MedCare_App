@@ -189,7 +189,7 @@ class SampleData {
     doctor: drTan,
     paymentMethod: PaymentMethod.insurance,
     insurance: DataService.allInsurance.first,
-    reasonOfVisit: "Annual Heart Checkup",
+    reasonOfVisit: "Annual Checkup",
 
     // Handling Optional Files
     guaranteeLetter: File('/dummy/gl_document.pdf'),

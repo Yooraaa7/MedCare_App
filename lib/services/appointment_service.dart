@@ -23,7 +23,7 @@ class AppointmentService {
         'contact': appointment.contact,
         'status': appointment.status.name,
         'paymentStatus': appointment.paymentStatus.name,
-        'paymentMethod': appointment.paymentMethod?.name,
+        'paymentMethod': appointment.paymentMethod.name,
         'fee': appointment.fee,
         'createdAt': FieldValue.serverTimestamp(),
       };

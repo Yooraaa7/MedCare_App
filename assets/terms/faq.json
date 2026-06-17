@@ -1,106 +1,54 @@
 [
-    {
-      "q": "Is this hospital private or government?",
-      "a": "Hospital Lam Wah Ee is a private not-for-profit charity hospital."
-    },
-    {
-      "q": "How can I get to Hospital Lam Wah Ee?",
-      "a": "From Penang Bridge head towards Georgetown. Pass Lotus’s, enter Udini underpass, continue to Jalan Masjid Negeri, then up the Autopont fly-over. The hospital is on the right."
-    },
-    {
-      "q": "What are the clinic consultation hours?",
-      "a": "Mon–Fri: 10 am – 12:30 pm, 2 pm – 4:30 pm\nSat: 10 am – 12:30 pm\nSun & Public Holidays: Closed"
-    },
-    {
-      "q": "Does the hospital accept emergency cases?",
-      "a": "Yes, the Accident & Emergency Department operates 24 hours daily."
-    },
-    {
-      "q": "Is ambulance service available?",
-      "a": "Yes. For ambulance service call 604-652 8686."
-    },
-    {
-      "q": "What facilities are available in the hospital?",
-      "a": "The hospital offers wards, operating theatres, diagnostic imaging, pharmacy, laboratory, and specialized centres."
-    },
-    {
-      "q": "What medical disciplines are available?",
-      "a": "Hospital Lam Wah Ee provides specialties such as cardiology, oncology, orthopaedics, paediatrics, obstetrics & gynaecology, and more."
-    },
-    {
-      "q": "What are the visiting hours?",
-      "a": "General wards: 12:30 pm – 2:00 pm, 5:00 pm – 8:00 pm\nICU/CCU: Restricted visiting hours, please check with staff."
-    },
-    {
-      "q": "How can I book an appointment online?",
-      "a": "Click on 'Appointment' at the top right corner of the hospital website, choose discipline, doctor, and time slot. Identify yourself as an existing or new patient, enter MRN, verify with OTP, and you’ll receive an email confirmation."
-    },
-    {
-      "q": "What are the benefits of online appointment booking?",
-      "a": "Online booking shortens waiting time at registration counters and clinics."
-    },
-    {
-      "q": "When should I make an appointment?",
-      "a": "Appointments should be made at least 1 day in advance of your preferred date."
-    },
-    {
-      "q": "How do I register as a new patient?",
-      "a": "New patients can register at the registration counters with their IC or passport. You will be issued a Medical Record Number (MRN) for future visits."
-    },
-    {
-      "q": "How do I pay my bills?",
-      "a": "Bills can be paid at the cashier counters using cash, credit card, or online payment methods. Insurance claims are also accepted for panel patients."
-    },
-    {
-        "q": "Does this hospital accept foreign currency?",
-        "a": "This hospital accepts Indonesia Rupiah, Singapore Dollar, Sterling Pound, Thai Baht and US Dollar. We also provide currency exchange services."
-    },
-    {
-        "q": "Where can I get bills and official receipts certified?",
-        "a": "For certification of bills and official receipts, proceed to the Outpatient or Inpatient Billing office on the 1st floor."
-    },
-    {
-      "q": "Does the hospital provide health screening packages?",
-      "a": "Yes, various health screening packages are available. Please check with the Health Screening Centre for details."
-    },
-    {
-      "q": "Can I request a medical report?",
-      "a": "Yes, medical reports can be requested through the Medical Records Department. Processing time and fees apply."
-    },
-    {
-        "q": "Where can I get my medical reports?",
-        "a": "To obtain your medical report, proceed to the Medical Report office on the 1st floor."
-    },
-    {
-      "q": "Is there a cafeteria in this hospital?",
-      "a": "Yes, there is a pork-free cafeteria on the ground floor that opens from 7 am - 10 pm."
-    },
-    {
-        "q": "Is there anywhere I can get newspapers, magazines, toys or confectionery?",
-        "a": "There is a small convenience store on the 1st floor near the entrance to the pathology lab."
-    },
-    {
-        "q": "Where can I perform my prayers?",
-        "a": "A prayer room (surau) is available on the ground floor."
-    },
-    {
-        "q": "Is there parking available at the hospital?",
-        "a": "Yes, ample parking is available for patients and visitors within the hospital compound."
-      },
-    {
-      "q": "Does the hospital accept insurance panels?",
-      "a": "Yes, the hospital accepts insurance claims from approved panel providers. Please check with your insurer for eligibility."
-    },
-    {
-      "q": "Are there pharmacy services available?",
-      "a": "Yes, the hospital pharmacy provides prescription and over-the-counter medications during clinic hours."
-    },
-    {
-      "q": "Does the hospital provide vaccination services?",
-      "a": "Yes, vaccination services are available. Please consult the clinic for schedules and availability."
-    },
-    {
-        "q": "How do I donate funds to this hospital?",
-        "a": "Donations can be made at the Finance Department on the 2nd floor during office hours and at the Main Reception Counter after office hours."
-    }
+  {
+    "q": "What are the hospital operating hours?",
+    "a": "The hospital operates 24 hours daily. Specialist clinics are generally open Monday to Friday from 8:00 AM to 5:00 PM and Saturday from 8:00 AM to 1:00 PM. Clinics are closed on Sundays and public holidays unless otherwise stated."
+  },
+  {
+    "q": "Does MEDCARE Hospital have an Emergency Department?",
+    "a": "Yes. Our Emergency Department operates 24 hours a day, 7 days a week for emergency medical treatment."
+  },
+  {
+    "q": "How can I book an appointment?",
+    "a": "Appointments can be booked through the MEDCARE mobile application, hospital website, or by contacting our appointment hotline."
+  },
+  {
+    "q": "Can I choose my preferred doctor?",
+    "a": "Yes. Patients may select their preferred specialist based on specialty and appointment availability."
+  },
+  {
+    "q": "How do I reschedule or cancel my appointment?",
+    "a": "Appointments can be rescheduled or cancelled through the MEDCARE mobile application under 'My Appointments' or by contacting our customer service."
+  },
+  {
+    "q": "Can I access my medical records through the app?",
+    "a": "Yes. Registered patients can securely view selected medical records, laboratory reports, prescriptions, and appointment history through the MEDCARE mobile application."
+  },
+  {
+    "q": "How do I pay my hospital bills?",
+    "a": "Payments can be made using cash, debit cards, credit cards, online banking, e-wallets, and approved insurance providers."
+  },
+  {
+    "q": "Does MEDCARE Hospital accept medical insurance?",
+    "a": "Yes. We accept selected insurance panels and corporate healthcare plans. Please check with our billing department for the latest list of panel providers."
+  },
+  {
+    "q": "Can foreign patients receive treatment?",
+    "a": "Yes. MEDCARE Hospital welcomes international patients and provides assistance with registration, appointments, and medical documentation."
+  },
+  {
+    "q": "Is parking available?",
+    "a": "Yes. Secure parking is available for patients and visitors. Designated parking spaces are provided for disabled visitors."
+  },
+  {
+    "q": "What should I bring for my appointment?",
+    "a": "Please bring your identification card or passport, appointment confirmation, insurance card (if applicable), referral letter, previous medical records (if available), and any current medications."
+  },
+  {
+    "q": "Can I receive appointment reminders?",
+    "a": "Yes. Appointment reminders are automatically sent through the MEDCARE mobile application via push notifications to help you remember your scheduled appointments."
+  },
+  {
+    "q": "Can I manage my medications using the app?",
+    "a": "Yes. The MEDCARE mobile application allows patients to create medication reminders, receive notification alerts, and manage their daily medication schedules."
+  }
 ]
