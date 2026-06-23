@@ -10,6 +10,7 @@
         "cloud_firestore",
         "file_picker",
         "firebase_core",
+        "fl_chart",
         "flutter",
         "flutter_launcher_icons",
         "flutter_local_notifications",
@@ -56,6 +57,14 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "fl_chart",
+      "version": "0.68.0",
+      "dependencies": [
+        "equatable",
+        "flutter"
       ]
     },
     {
@@ -1019,6 +1028,14 @@
       "dependencies": [
         "meta",
         "path"
+      ]
+    },
+    {
+      "name": "equatable",
+      "version": "2.0.8",
+      "dependencies": [
+        "collection",
+        "meta"
       ]
     }
   ],

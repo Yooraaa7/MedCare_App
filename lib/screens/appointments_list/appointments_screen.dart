@@ -4,6 +4,7 @@ import 'package:medcare_app/general/components/switch_theme_button.dart';
 import 'package:medcare_app/models/appointments/base_appointment.dart';
 import 'package:medcare_app/screens/appointments_list/components/appointment_card.dart';
 import 'package:intl/intl.dart';
+import 'package:medcare_app/screens/appointments_list/history_screen.dart';
 
 class AppointmentsScreen extends StatefulWidget {
   const AppointmentsScreen({super.key});
@@ -19,7 +20,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -38,6 +39,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
             Tab(text: "Upcoming"),
             Tab(text: "Completed"),
             Tab(text: "Cancelled"),
+            Tab(text: "History")
           ],
         ),
       ),
@@ -47,6 +49,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
           _buildUpcomingTab(),
           _buildCompletedTab(),
           _buildCancelledTab(),
+          const AppointmentHistoryScreen(),
         ],
       ),
     );
