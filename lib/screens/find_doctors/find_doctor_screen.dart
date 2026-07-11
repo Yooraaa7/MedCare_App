@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:medcare_app/services/data_service.dart';
 import 'package:medcare_app/general/components/custom_appbar.dart';
@@ -21,6 +22,7 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
   late int selectedIndex;
   late List<GlobalKey> _filterKeys;
   final ScrollController _filterScrollController = ScrollController();
+  StreamSubscription? _doctorSubscription;
 
   String searchQuery = "";
   final specialties = DataService.allSpecialties;
@@ -28,6 +30,11 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
   @override
   void initState() {
     super.initState();
+
+    _doctorSubscription = DataService.watchDoctors().listen((doctors) {
+      if (!mounted) return;
+      setState(() => DataService.allDoctors = doctors);
+    });
 
     // +1 for "All"
     _filterKeys = List.generate(specialties.length + 1, (_) => GlobalKey());
@@ -42,6 +49,13 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
     if (selectedIndex > 0) {
       _scrollToSelected();
     }
+  }
+
+  @override
+  void dispose() {
+    _doctorSubscription?.cancel();
+    _filterScrollController.dispose();
+    super.dispose();
   }
 
   void _scrollToSelected() {

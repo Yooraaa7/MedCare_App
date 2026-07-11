@@ -5,6 +5,7 @@ import 'package:medcare_app/models/workday.dart';
 var specialties = DataService.allSpecialties;
 
 class Doctor {
+  final String id;
   final String imagePath;
   final String nameEng;
   final String nameChinese;
@@ -21,6 +22,7 @@ class Doctor {
   final String? remarks;
 
   const Doctor({
+    this.id = '',
     required this.imagePath,
     required this.nameEng,
     required this.nameChinese,
@@ -39,8 +41,9 @@ class Doctor {
 
   String get fullImagePath => 'assets/images/doctors/$imagePath';
 
-  factory Doctor.fromJson(Map<String, dynamic> map) {
+  factory Doctor.fromJson(Map<String, dynamic> map, {String id = ''}) {
     return Doctor(
+      id: id,
       imagePath: map['imagePath'] ?? '',
       nameEng: map['nameEng'] ?? '',
       nameChinese: map['nameChinese'] ?? '',

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:medcare_app/services/auth_service.dart';
 import 'package:medcare_app/services/data_service.dart';
 import 'package:medcare_app/services/notification_service.dart';
+import 'package:medcare_app/services/appointment_service.dart';
 import 'package:medcare_app/general/themes/dark_theme.dart';
 import 'package:medcare_app/general/themes/light_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +29,10 @@ void main() async {
     await DataService.initService();
     await DataService.initDoctor();
     await DataService.initVaccines();   // ← add this
-    await DataService.initPackages(); 
+    await DataService.initPackages();
+    if (authService.isAuthenticated) {
+      await AppointmentService.loadCurrentUserAppointments();
+    }
   } catch (e) {
     debugPrint("Initialization Error: $e");
   }

@@ -2,230 +2,429 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medcare_app/data/sample_data.dart';
 import 'package:medcare_app/general/components/custom_appbar.dart';
-import 'package:medcare_app/general/components/custom_divider.dart';
-import 'package:medcare_app/screens/payment/components/bill_item_tile.dart';
+import 'package:medcare_app/general/themes/components/app_colors.dart';
 import 'package:medcare_app/models/bill_item.dart';
-import 'package:intl/intl.dart';
+import 'package:medcare_app/services/user_service.dart';
 
-class BillSummaryScreen extends StatelessWidget {
-  const BillSummaryScreen({super.key});
+class BillSummaryScreen extends StatefulWidget {
+  const BillSummaryScreen({
+    super.key,
+  });
+
+  @override
+  State<BillSummaryScreen> createState() =>
+      _BillSummaryScreenState();
+}
+
+class _BillSummaryScreenState
+    extends State<BillSummaryScreen> {
+  late List<BillItem> billItems;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Only the fixed demo account receives
+    // the original sample bill records.
+    billItems = UserService.isDemoUser
+        ? List<BillItem>.from(
+            SampleData.billItems,
+          )
+        : <BillItem>[];
+  }
+
+  double get subtotal {
+    return billItems.fold<double>(
+      0.0,
+      (total, item) => total + item.amount,
+    );
+  }
+
+  double get discount {
+    return 0.0;
+  }
+
+  double get total {
+    return subtotal - discount;
+  }
+
+  String _formatAppointmentDate(
+    DateTime date,
+  ) {
+    final String day =
+        date.day.toString().padLeft(2, '0');
+
+    final String month =
+        date.month.toString().padLeft(2, '0');
+
+    return '$day/$month/${date.year}';
+  }
 
   @override
   Widget build(BuildContext context) {
-    final billItems = SampleData.billItems;
-    final grandTotal = billItems.fold<double>(
-      0,
-      (sum, item) => sum + item.amount,
-    );
-
-    // Group by Date first
-    final Map<String, List<BillItem>> dateGroups = {};
-    for (var item in billItems) {
-      String dateKey = DateFormat(
-        'dd MMM yyyy, EEEE',
-      ).format(item.relatedAppointment.date);
-      dateGroups.putIfAbsent(dateKey, () => []).add(item);
-    }
+    final bool isDark =
+        Theme.of(context).brightness ==
+            Brightness.dark;
 
     return Scaffold(
-      appBar: const CustomAppbar(title: 'Bill Summary'),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+      appBar: const CustomAppbar(
+        title: 'Bill Summary',
+      ),
+      body: billItems.isEmpty
+          ? _buildEmptyState(context)
+          : _buildBillContent(
+              context,
+              isDark,
+            ),
+      bottomNavigationBar: billItems.isEmpty
+          ? null
+          : _buildBottomPaymentBar(
+              context,
+            ),
+    );
+  }
+
+  Widget _buildEmptyState(
+    BuildContext context,
+  ) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 40,
+        ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(6),
+            Icon(
+              Icons.receipt_long_outlined,
+              size: 72,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onTertiary,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'No Bill Items',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(
+                    fontWeight:
+                        FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'You do not have any outstanding '
+              'bill items at this time.',
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: () {
+                context.pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
               ),
-              child: Column(
-                children: [
-                  _buildHeader(),
-
-                  ...dateGroups.entries.map((dateEntry) {
-                    final String date = dateEntry.key;
-                    final List<BillItem> itemsInDate = dateEntry.value;
-                    final double dailySubtotal = itemsInDate.fold(
-                      0,
-                      (sum, item) => sum + item.amount,
-                    );
-
-                    // 2. Group items within this date by Appointment ID
-                    final Map<String, List<BillItem>> appointmentGroups = {};
-
-                    for (var item in itemsInDate) {
-                      appointmentGroups
-                          .putIfAbsent(item.relatedAppointment.id, () => [])
-                          .add(item);
-                    }
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildDateHeader(context, date),
-
-                        // Render Grouped Appointment Items
-                        ...appointmentGroups.entries.map((apptEntry) {
-                          return _buildAppointmentGroup(
-                            context,
-                            apptEntry.key,
-                            apptEntry.value,
-                          );
-                        }),
-
-                        _buildDailySubtotal(context, dailySubtotal),
-                      ],
-                    );
-                  }),
-                ],
+              label: const Text(
+                'Back to Payment',
               ),
             ),
-            const SizedBox(height: 30),
-            _buildGrandTotalRow(context, grandTotal),
-            const SizedBox(height: 40),
           ],
         ),
       ),
     );
   }
 
-  // Helper to build the nested appointment block
-  Widget _buildAppointmentGroup(
+  Widget _buildBillContent(
     BuildContext context,
-    String apptId,
-    List<BillItem> items,
+    bool isDark,
   ) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // List of items belonging to this appointment
-          ...items.map((item) => BillItemTile(item: item)),
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(
+        20,
+        24,
+        20,
+        130,
+      ),
+      children: [
+        _buildPatientSection(context),
+        const SizedBox(height: 24),
+        Text(
+          'Outstanding Items',
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium
+              ?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        const SizedBox(height: 12),
+        ...billItems.map(
+          (item) => _buildBillItemCard(
+            context,
+            item,
+            isDark,
+          ),
+        ),
+        const SizedBox(height: 12),
+        _buildTotalCard(
+          context,
+          isDark,
+        ),
+      ],
+    );
+  }
 
-          // Navigates to the related appointment
-          Padding(
-            padding: const EdgeInsets.only(left: 40, bottom: 4, top: 4),
-            child: InkWell(
-              onTap: () =>
-                  context.push('/appointments/appointment-details/$apptId'),
-              borderRadius: BorderRadius.circular(4),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "View Appointment Details",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    Icon(
-                      Icons.chevron_right,
-                      size: 16,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ],
-                ),
+  Widget _buildPatientSection(
+    BuildContext context,
+  ) {
+    final patient =
+        UserService.currentUser;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 26,
+              backgroundColor:
+                  Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withAlpha(30),
+              child: Icon(
+                Icons.person,
+                color: Theme.of(context)
+                    .colorScheme
+                    .primary,
               ),
             ),
-          ),
-          const CustomDivider(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDateHeader(BuildContext context, String date) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
-        border: Border(
-          top: BorderSide(color: Colors.grey.shade400, width: 1),
-          bottom: BorderSide(color: Colors.grey.shade400, width: 1),
-        ),
-      ),
-      child: Text(
-        date,
-        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-      ),
-    );
-  }
-
-  Widget _buildDailySubtotal(BuildContext context, double amount) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(10, 0, 10, 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "Subtotal",
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(fontSize: 12),
-          ),
-          Text(
-            'RM ${amount.toStringAsFixed(2)}',
-            style: const TextStyle(fontWeight: FontWeight.w600),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-      decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 16, 88, 159),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5),
-          topRight: Radius.circular(5),
-        ),
-      ),
-      child: const Row(
-        children: [
-          Expanded(flex: 1, child: Text("Qty", style: headerStyle)),
-          Expanded(flex: 5, child: Text("Description", style: headerStyle)),
-          Expanded(
-            flex: 3,
-            child: Text(
-              "Amount (RM)",
-              textAlign: TextAlign.right,
-              style: headerStyle,
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    patient?.name ??
+                        'Patient',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(
+                          fontWeight:
+                              FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'MR No: '
+                    '${patient?.mrNo ?? "-"}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildGrandTotalRow(BuildContext context, double total) {
+  Widget _buildBillItemCard(
+    BuildContext context,
+    BillItem item,
+    bool isDark,
+  ) {
+    final DateTime appointmentDate =
+        item.relatedAppointment.date;
+
+    return Card(
+      margin:
+          const EdgeInsets.only(bottom: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          crossAxisAlignment:
+              CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: Theme.of(context)
+                    .colorScheme
+                    .primary
+                    .withAlpha(30),
+                borderRadius:
+                    BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.medical_services_outlined,
+                color: Theme.of(context)
+                    .colorScheme
+                    .primary,
+              ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.description,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(
+                          fontWeight:
+                              FontWeight.w600,
+                        ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    _formatAppointmentDate(
+                      appointmentDate,
+                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            Text(
+              'RM ${item.amount.toStringAsFixed(2)}',
+              style: const TextStyle(
+                color: AppColors.strongRed,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTotalCard(
+    BuildContext context,
+    bool isDark,
+  ) {
+    return Card(
+      color: isDark
+          ? Theme.of(context)
+              .colorScheme
+              .secondary
+              .withAlpha(70)
+          : Theme.of(context)
+              .colorScheme
+              .primary
+              .withAlpha(20),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            _buildAmountRow(
+              context,
+              'Subtotal',
+              subtotal,
+            ),
+            const SizedBox(height: 10),
+            _buildAmountRow(
+              context,
+              'Discount',
+              discount,
+            ),
+            const Divider(height: 26),
+            _buildAmountRow(
+              context,
+              'Total Payable',
+              total,
+              isTotal: true,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAmountRow(
+    BuildContext context,
+    String label,
+    double amount, {
+    bool isTotal = false,
+  }) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment:
+          MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          "Total Payable",
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+        Text(
+          label,
+          style: TextStyle(
+            fontWeight: isTotal
+                ? FontWeight.bold
+                : FontWeight.normal,
+            fontSize: isTotal ? 17 : 14,
+          ),
         ),
         Text(
-          "RM ${total.toStringAsFixed(2)}",
+          'RM ${amount.toStringAsFixed(2)}',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 22,
-            color: Theme.of(context).colorScheme.primary,
+            fontSize: isTotal ? 18 : 14,
+            color: isTotal
+                ? AppColors.strongRed
+                : null,
           ),
         ),
       ],
     );
   }
-}
 
-const headerStyle = TextStyle(fontWeight: FontWeight.w600, color: Colors.white);
+  Widget _buildBottomPaymentBar(
+    BuildContext context,
+  ) {
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(
+          20,
+          14,
+          20,
+          14,
+        ),
+        decoration: BoxDecoration(
+          color: Theme.of(context)
+              .scaffoldBackgroundColor,
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 12,
+              offset: Offset(0, -3),
+              color: Colors.black12,
+            ),
+          ],
+        ),
+        child: ElevatedButton(
+          onPressed: () {
+            context.push(
+              '/payment-selection'
+              '?amount=$total',
+            );
+          },
+          child: Text(
+            'Pay RM ${total.toStringAsFixed(2)}',
+          ),
+        ),
+      ),
+    );
+  }
+}

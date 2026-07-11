@@ -84,8 +84,12 @@ class _BookPackageScreenState extends State<BookPackageScreen> {
       }
     } else {
       // New appointment — add locally AND save to Firestore
+      final error = await AppointmentService.saveAppointment(appointment);
+      if (error != null) {
+        if (mounted) showCustomSnackbar(context, error, type: SnackbarType.error);
+        return;
+      }
       DataService.allAppointments.add(appointment);
-      await AppointmentService.saveAppointment(appointment); // ← Firestore
       if (mounted) {
         showCustomSnackbar(
           context,

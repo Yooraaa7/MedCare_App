@@ -241,6 +241,19 @@ class SampleData {
     ],
   );
 
+  static final cancelledDoctorAppointment = DoctorAppointment(
+    id: const Uuid().v4(),
+    date: DateTime(2025, 11, 8),
+    timeSlot: "09:00 AM - 10:00 AM",
+    location: drTan.location,
+    contact: drTan.contact,
+    doctor: drTan,
+    paymentMethod: PaymentMethod.selfPay,
+    paymentStatus: PaymentStatus.unpaid,
+    status: AppointmentStatus.cancelled,
+    reasonOfVisit: "Follow-up Consultation",
+  );
+
   static final vaccineAppointment = VaccineAppointment(
     id: const Uuid().v4(),
     date: DateTime(2026, 2, 14),

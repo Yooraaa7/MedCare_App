@@ -3,8 +3,9 @@ import 'package:medcare_app/services/data_service.dart';
 import 'package:medcare_app/general/components/switch_theme_button.dart';
 import 'package:medcare_app/models/appointments/base_appointment.dart';
 import 'package:medcare_app/screens/appointments_list/components/appointment_card.dart';
-import 'package:intl/intl.dart';
 import 'package:medcare_app/screens/appointments_list/history_screen.dart';
+import 'package:medcare_app/services/user_service.dart';
+import 'package:intl/intl.dart';
 
 class AppointmentsScreen extends StatefulWidget {
   const AppointmentsScreen({super.key});
@@ -39,7 +40,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
             Tab(text: "Upcoming"),
             Tab(text: "Completed"),
             Tab(text: "Cancelled"),
-            Tab(text: "History")
+            Tab(text: "History"),
           ],
         ),
       ),
@@ -49,7 +50,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
           _buildUpcomingTab(),
           _buildCompletedTab(),
           _buildCancelledTab(),
-          const AppointmentHistoryScreen(),
+          _buildHistoryTab(),
         ],
       ),
     );
@@ -131,6 +132,50 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
             ),
           );
         }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildHistoryTab() {
+    // The dashboard in history_screen.dart contains the original showcase
+    // statistics, so it is displayed only for the demo account.
+    if (UserService.isDemoUser) {
+      return const AppointmentHistoryScreen();
+    }
+
+    final hasPastAppointments = DataService.allAppointments.any(
+      (appointment) =>
+          appointment.status == AppointmentStatus.completed ||
+          appointment.status == AppointmentStatus.cancelled,
+    );
+
+    if (!hasPastAppointments) {
+      return _buildEmptyState('No appointment history found.');
+    }
+
+    final historyAppointments = DataService.allAppointments
+        .where(
+          (appointment) =>
+              appointment.status == AppointmentStatus.completed ||
+              appointment.status == AppointmentStatus.cancelled,
+        )
+        .toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(30),
+      child: Column(
+        children: historyAppointments
+            .map(
+              (appointment) => Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: AppointmentCard(
+                  date: appointment.date,
+                  appointments: [appointment],
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }

@@ -50,9 +50,15 @@ class _BookAppointmentsScreenState extends State<BookAppointmentsScreen> {
         );
       }
     } else {
-      // New appointment — add locally AND save to Firestore
+      // Firestore transaction reserves the doctor slot and saves the appointment.
+      final error = await AppointmentService.saveAppointment(appointment);
+      if (error != null) {
+        if (mounted) {
+          showCustomSnackbar(context, error, type: SnackbarType.error);
+        }
+        return;
+      }
       DataService.allAppointments.add(appointment);
-      await AppointmentService.saveAppointment(appointment); // ← Firestore
       if (mounted) {
         showCustomSnackbar(
           context,

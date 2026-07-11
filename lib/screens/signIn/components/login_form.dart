@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:medcare_app/data/sample_data.dart';
 import 'package:medcare_app/general/components/custom_snackbar.dart';
 import 'package:medcare_app/general/components/password_field.dart';
 import 'package:medcare_app/general/themes/components/app_spacing.dart';
 import 'package:medcare_app/general/components/custom_text_field.dart';
 import 'package:medcare_app/general/validators.dart';
 import 'package:medcare_app/main.dart';
+import 'package:medcare_app/services/user_service.dart';
+import 'package:medcare_app/services/appointment_service.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -21,27 +22,35 @@ class _LoginFormState extends State<LoginForm> {
   String? _phoneNumber;
   String? _password;
 
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+  bool _isLoading = false;
 
-      if (SampleData.sampleUser.phone == _phoneNumber &&
-          SampleData.sampleUser.password == _password) {
-        String token = '123456';
-        authService.login(token);
-        showCustomSnackbar(
-          context,
-          'Signed in successfully!',
-          type: SnackbarType.success,
-        );
-      } else {
-        showCustomSnackbar(
-          context,
-          'Invalid login credentials.',
-          type: SnackbarType.error,
-        );
-      }
+  Future<void> _submit() async {
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+    _formKey.currentState!.save();
+    setState(() => _isLoading = true);
+
+    final error = await UserService.login(
+      phone: _phoneNumber!,
+      password: _password!,
+    );
+
+    if (!mounted) return;
+    if (error != null) {
+      setState(() => _isLoading = false);
+      showCustomSnackbar(context, error, type: SnackbarType.error);
+      return;
     }
+
+    await authService.login(UserService.currentUserId!);
+    await AppointmentService.loadCurrentUserAppointments();
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+    showCustomSnackbar(
+      context,
+      'Signed in successfully!',
+      type: SnackbarType.success,
+    );
+    context.go('/home');
   }
 
   @override
@@ -73,7 +82,12 @@ class _LoginFormState extends State<LoginForm> {
 
           AppSpacing.medium,
 
-          ElevatedButton(onPressed: _submit, child: const Text('Sign In')),
+          ElevatedButton(
+            onPressed: _isLoading ? null : _submit,
+            child: _isLoading
+                ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                : const Text('Sign In'),
+          ),
         ],
       ),
     );
